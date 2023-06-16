@@ -1,0 +1,6 @@
+Django
+django-allauth
+celery[redis]
+redis
+python-dotenv
+django-ckeditor
