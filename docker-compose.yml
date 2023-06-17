@@ -1,0 +1,39 @@
+services:
+    web:
+        build: .
+        hostname: Forum
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            -   .:/code
+        ports:
+            - "8000:8000"
+
+    redis:
+        image: redis:alpine
+        hostname: redis
+
+    worker:
+        build:
+            context: .
+        hostname: celery worker
+        entrypoint: celery
+        command: -A Forum worker --loglevel=info
+        volumes:
+            -   .:/code:/Forum
+        links:
+            -   redis
+        depends_on:
+            -   redis
+
+    beat:
+        build:
+            context: .
+        hostname: celery beat
+        entrypoint: celery
+        command: -A Forum worker --loglevel=info -B
+        volumes:
+            - .:/code:/Forum
+        links:
+            - redis
+        depends_on:
+            - redis

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     """ Категория объявления форума """
-    name = models.CharField(null=False)
+    name = models.CharField(max_length=50, null=False)
 
     def __str__(self):
         return self.name
@@ -16,7 +16,7 @@ class Announcement(models.Model):
     """ Модель объявления форума """
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, null=False)
-    text = RichTextFormField(null=False)
+    text = RichTextFormField
     date = models.DateTimeField(default=django.utils.timezone.now)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
