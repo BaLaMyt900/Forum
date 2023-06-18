@@ -1,6 +1,4 @@
 $(function() {
-    // Start a timer that will call our API at regular intervals
-    // The 2nd value is the time in milliseconds, so 5000 = 5 seconds
     setInterval(updateChat, 3000);
     get_chat()
 });
@@ -10,7 +8,7 @@ function updateChat() {
         // Enumerate JSON objects
         $.each(data, function (i, item){
                 // console.log(item);
-                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break" style="width: 220px">');
+                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break w-30" style="width: 240px">');
                 newChatLine.append('<div class="fw-semibold">' + item.author__username + '</div>');
                 newChatLine.append('<div class="fw-lighter">' + item.text + '</div>');
                 $('#chatbox').append(newChatLine);
@@ -25,7 +23,7 @@ function get_chat() {
         success: function (data){
             $.each(data, function (i, item){
                 // console.log(item);
-                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break" style="width: 220px">');
+                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break w-30" style="width: 240px">');
                 newChatLine.append('<div class="fw-semibold">' + item.author__username + '</div>');
                 newChatLine.append('<div class="fw-lighter">' + item.text + '</div>');
                 $('#chatbox').append(newChatLine);
@@ -50,20 +48,20 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+const csrftoken = getCookie('csrftoken');
 
 $(function ($) {
     $('#new_message').submit(function (e) {
-        e.preventDefault()
+        e.preventDefault();
         var $data = {};
-        $data['csrfmiddlewaretoken'] = getCookie('csrftoken');
         $('#new_message').find('input').each(function (){
             $data[this.name] = $(this).val();
-        })
-        console.log($data)
+        });
         $.ajax({
             type: 'POST',
             url: 'api/new_chat_message/',
             data: $data,
+            headers: {'X-CSRFToken': csrftoken},
             success: function (data) {
                 $('#new_message').find('input').val('')
             }
