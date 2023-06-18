@@ -23,6 +23,9 @@ class Announcement(models.Model):
     def __str__(self):
         return self.title if len(self.title) < 25 else self.title[:22] + '...'
 
+    class Meta:
+        ordering = ('-date', )
+
 
 class Response(models.Model):
     """ Отклик на объявлление форума """
@@ -30,3 +33,6 @@ class Response(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(max_length=300, null=False)
     date = models.DateTimeField(default=django.utils.timezone.now)
+
+    class Meta:
+        ordering = ('-date', )
