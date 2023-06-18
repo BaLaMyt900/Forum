@@ -24,7 +24,7 @@ $(function ($){
             $data[this.name] = $(this).val();
         });
         $.ajax({
-            url: "account/login/",
+            url: "/account/login/",
             type: 'POST',
             data: $data,
             headers: {'X-CSRFToken': csrftokenn},

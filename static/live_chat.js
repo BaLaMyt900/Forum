@@ -4,7 +4,7 @@ $(function() {
 });
 
 function updateChat() {
-    $.getJSON('api/get_latest_chat/3', function(data){
+    $.getJSON('/api/get_latest_chat/3', function(data){
         // Enumerate JSON objects
         $.each(data, function (i, item){
                 // console.log(item);
@@ -19,7 +19,7 @@ function updateChat() {
 
 function get_chat() {
     $.getJSON({
-        url: 'api/get_chat/',
+        url: '/api/get_chat/',
         success: function (data){
             $.each(data, function (i, item){
                 // console.log(item);

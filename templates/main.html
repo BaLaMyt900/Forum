@@ -76,9 +76,9 @@
   <div class="p-2" style="width: 300px">
     <div class="card flex-nowrap">
       <div class="card-header">Личный кабинет</div>
-      <div class="card-body bg-body-tertiary">
+      <div class="card-body bg-body-tertiary" id="login_window">
         <form class="form-control bg-body-tertiary" id="login_form">
-          <label for="login_email">Логин</label>
+          <label for="login_email">E-mail адрес</label>
           <input class="form-control" id="login_email" name="login" type="email" required>
           <div class="invalid-feedback" id="login_errors"></div>
           <label for="password">Пароль</label>
@@ -87,11 +87,12 @@
             <input class="form-check-input" id="remember" name="remember" type="checkbox">
             <label class="form-check-label" for="remember">Запомнить меня</label>
           </div>
-          <button class="btn btn-outline-primary my-2 bg-body" type="submit">Авторизация</button>
+          <button class="btn btn-outline-primary my-2 bg-body" style="width: 223px" type="submit">Авторизация</button>
+          <h7>Еще нет аккаунта? <a href="{% url 'account_signup' %}">Регистрация</a></h7>
           <div class="alert alert-danger d-none" id="errors" role="alert"></div>
         </form>
-        <script src="{% static 'profile.js' %}"></script>
       </div>
+      <script src="{% static 'profile.js' %}"></script>
     </div>
   </div>
   </div>
