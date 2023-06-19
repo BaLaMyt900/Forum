@@ -59,7 +59,7 @@ $(function ($) {
         });
         $.ajax({
             type: 'POST',
-            url: 'api/new_chat_message/',
+            url: '/api/new_chat_message/',
             data: $data,
             headers: {'X-CSRFToken': csrftoken},
             success: function (data) {

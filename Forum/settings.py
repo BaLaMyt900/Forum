@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-b)j9-&b8k5vga)ai2m)id9qk478@3)ky=yzhwxwm$6ehjt+e58
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 SITE_ID = 1
 
@@ -42,12 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'main',
-    'livechat'
+    'livechat',
 ]
 
 MIDDLEWARE = [
@@ -88,13 +89,24 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 # LOGIN
-# LOGIN_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_QUERY_EMAIL = False
+
+# EMAIL
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.environ.get('LOGIN')
+EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = f'{os.environ.get("LOGIN")}@yandex.ru'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

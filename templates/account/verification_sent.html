@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{% block extra_head %}
+{% load i18n %}
+{% load static %}
+{% endblock extra_head %}
+{% block title %}{% trans "Verify Your E-mail Address" %}{% endblock title %}
+{% block body %}
+<div class="card">
+  <div class="card-header">{% trans "Verify Your E-mail Address" %}</div>
+  <div class="card-body bg-body-tertiary">
+      <div class="card-text bg-body text-wrap text-break">{% blocktrans %}Мы отправили вам электронное письмо для проверки. Перейдите по предоставленной ссылке, чтобы завершить процесс регистрации. Если вы не видите письмо с подтверждением в своем основном почтовом ящике, проверьте папку со спамом. Пожалуйста, свяжитесь с нами, если вы не получили электронное письмо с подтверждением в течение нескольких минут.{% endblocktrans %}</div>
+  </div>
+</div>
+{% block content %}
+{% endblock content %}
+{% endblock body %}
+{% block extra_body %}
+{% endblock extra_body %}

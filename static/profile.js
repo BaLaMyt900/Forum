@@ -24,7 +24,7 @@ $(function ($){
             $data[this.name] = $(this).val();
         });
         $.ajax({
-            url: "/account/login/",
+            url: "/accounts/login/",
             type: 'POST',
             data: $data,
             headers: {'X-CSRFToken': csrftokenn},
@@ -49,7 +49,6 @@ $(function ($){
                     $('#errors').addClass('d-none');
                 }
             }
-        })
-
-    })
-})
+        });
+    });
+});

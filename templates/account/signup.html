@@ -8,22 +8,31 @@
 <div class="card">
   <div class="card-header">Регистрация</div>
   <div class="card-body bg-body-tertiary">
-    <form class="signup form-control border-0 bg-body-tertiary" id="signup_form" method="post" action="/account/signup/">{% csrf_token %}
+{#      <div class="card-title">#}
+{#        {% if messages %}#}
+{#            <div class="py-3">#}
+{#                <div class="card">#}
+{#                    <div class="card-header bg-gradient bg-body-tertiary text-body-emphasis">{% trans "Messages:" %}</div>#}
+{#                        <div class="card-body text-wrap text-break">#}
+{#                            <ul>#}
+{#                                {% for message in messages %}#}
+{#                                <li>{{message}}</li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endif %}#}
+{#      </div>#}
+    <form class="signup form-control border-0 bg-body-tertiary" id="signup_form" method="post" action="/accounts/signup/">{% csrf_token %}
     <label for="id_email">E-mail:</label>
     <input class="form-control" type="email" name="email" placeholder="E-mail адрес" autocomplete="email" required="" id="id_email">
-
-
     <label for="id_username">Имя пользователя:</label>
     <input class="form-control" type="text" name="username" placeholder="Имя пользователя" autocomplete="username" minlength="1" maxlength="150" required="" id="id_username">
-
-
     <label for="id_password1">Пароль:</label>
     <input class="form-control" type="password" name="password1" placeholder="Пароль" autocomplete="new-password" required="" id="id_password1">
-
-
     <label for="id_password2">Пароль (еще раз):</label>
     <input class="form-control" type="password" name="password2" placeholder="Пароль (еще раз)" autocomplete="new-password" required="" id="id_password2">
-
   <button class="btn btn-outline-primary my-1" type="submit">Регистрация »</button>
 </form>
   </div>
