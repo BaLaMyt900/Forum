@@ -21,6 +21,7 @@ function get_chat() {
     $.getJSON({
         url: '/api/get_chat/',
         success: function (data){
+            $('#chat_spinner').addClass('d-none');
             $.each(data, function (i, item){
                 // console.log(item);
                 var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break w-30" style="width: 240px">');
@@ -65,6 +66,6 @@ $(function ($) {
             success: function (data) {
                 $('#new_message').find('input').val('')
             }
-            })
-    })
-})
+            });
+    });
+});

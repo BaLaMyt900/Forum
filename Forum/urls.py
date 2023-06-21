@@ -6,5 +6,6 @@ urlpatterns = [
     path('', include('livechat.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('accounts/', include('profile.urls')),
     path('', index)
 ]

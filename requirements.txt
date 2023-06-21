@@ -4,3 +4,4 @@ celery[redis]
 redis
 python-dotenv
 django-ckeditor
+django-generic-json-views

@@ -4,7 +4,6 @@ function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -30,6 +29,7 @@ $(function ($){
             headers: {'X-CSRFToken': csrftokenn},
             dataType: 'json',
             success: function (data) {
+                console.log(data);
                 window.location.reload();
             },
             error: function (data) {
@@ -52,3 +52,46 @@ $(function ($){
         });
     });
 });
+
+$(function ($) {
+    $('#logout_form').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/accounts/logout/',
+            type: 'POST',
+            headers: {'X-CSRFToken': csrftokenn},
+            success: function (data) {
+                window.location.reload();
+            },
+            error: function (data) {
+                console.log('ERROR -' + data);
+            }
+        });
+    });
+});
+
+function Getprofile(pk) {
+    $.ajax({
+        url: 'accounts/profile/' + pk,
+        dataType: 'json',
+        type: 'GET',
+        success: function (data) {
+            console.log('OK - ' + data);
+            let profile = data.object;
+            let announce = data.announce;
+            let response = data.response;
+            if (profile) {
+                var profile_form = $('<form>');
+                $.each(profile, function (i , item) {
+                    profile_form.append('<label class="form-label" for="profile_">${item}</label>');
+                    profile_form.append('<input id="profile_${item}" class="form-control" value="${item}" placeholder="${item}" type="text">');
+                });
+                $('#profile_content').append(profile_form);
+            }
+        },
+        error: function (data) {
+            console.log('ERROR - ' + data);
+        }
+    });
+    return null;
+}

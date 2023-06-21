@@ -51,8 +51,9 @@
       <div class="card-body p-0">
         <div class="card-text bg-body-tertiary">
           <div id="chatbox" class="d-flex flex-column rounded shadow overflow-y-auto py-2" style="height: 400px">
-              <div class="border rounded bg-body">
-              </div>
+            <div class="spinner-border m-auto" id="chat_spinner" role="status">
+              <span class="visually-hidden">Загрузка...</span>
+            </div>
           </div>
           <div>
             <form class="form-control d-flex border-0 bg-body-tertiary" id="new_message">
@@ -69,13 +70,13 @@
     </div>
     </div>
   <div class="p-2 flex-fill flex-wrap w-50">{% block body %}{% endblock body %}</div>
-  <div class="p-2" style="width: 300px">
+  <div class="p-2" style="width: 400px">
     <div class="card flex-nowrap">
       <div class="card-header">Личный кабинет</div>
       <div class="card-body bg-body-tertiary" id="login_window">
         {% if not request.user.is_authenticated %}
           <form class="form-control bg-body-tertiary" id="login_form">
-          <label for="login_email">E-mail адрес</label>
+          <label for="login_email">Логин или E-mail адрес</label>
           <input class="form-control" id="login_email" name="login" type="text" required>
           <div class="invalid-feedback" id="login_errors"></div>
           <label for="password">Пароль</label>
@@ -90,7 +91,21 @@
         </form>
        {% else %}
           <div class="card">
-          <div class="card-header"><a href="{% url 'account_logout' %}" class="btn btn-outline-danger bg-body">Выход</a></div>
+          <div class="card-header bg-body-tertiary">Здравствуй {{ request.user.username }}!</div>
+          <div class="card-body bg-body-tertiary">
+            <div class="d-flex flex-row mb-3 btn-group bg-body" role="group">
+              <button class="btn btn-outline-primary btn-sm" id="profile_btn">Профиль<span class="badge bg-primary rounded-pill">14</span></button>
+              <button class="btn btn-outline-primary btn-sm" id="announce_btn">Объявления<span class="badge bg-primary rounded-pill">14</span></button>
+              <button class="btn btn-outline-primary btn-sm" id="reply_btn">Отзывы<span class="badge bg-primary rounded-pill">14</span></button>
+            </div>
+            <div class="" id="profile_content"></div>
+            <div class="d-none" id="announce_content"></div>
+            <div class="d-none" id="reply_content"></div>
+          </div>
+          <div class="card-footer d-grid gap-2 bg-body-tertiary">
+            <button class="btn btn-outline-danger" id="logout_form">Выход</button>
+            <button onclick="return Getprofile('{{request.user.pk}}')">Обновить</button>
+          </div>
           </div>
        {% endif %}
       </div>
