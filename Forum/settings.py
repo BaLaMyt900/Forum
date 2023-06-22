@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django_summernote',
-    "django_bootstrap5",
     'main',
     'livechat',
 ]
@@ -117,9 +116,19 @@ DEFAULT_FROM_EMAIL = f'{os.environ.get("LOGIN")}@yandex.ru'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-SUMMERNOTE_THEME = 'bs4'
+SUMMERNOTE_THEME = 'bs5'
+# SUMMERNOTE_CONFIG = {
+#     'width': '100%',
+#     'background': '#212529',
+#     'css': ('//cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/3024-night.min.css',),
+# }
 SUMMERNOTE_CONFIG = {
-    'width': '100%'
+    'iframe': True,
+    'summernote': {
+        'width': '100%',
+        'theme': 'base16-dark',
+        'background-color': 'bg-body'
+    }
 }
 
 
