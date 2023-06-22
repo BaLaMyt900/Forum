@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .models import Announcement, Response
+from django.views.generic import CreateView
+from .forms import AnnounceForm
+from .models import Announcement, Response, Category
 from itertools import chain
 from django.http import JsonResponse
 
@@ -15,6 +17,16 @@ def LastActivityAjax(request):
         return JsonResponse(status=200, data={'list': activity})
 
 
+class AnnouncementCreate(CreateView):
+    """ Страница создания объявления """
+    model = Announcement
+    form_class = AnnounceForm
+    template_name = 'announce/new.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all().values('pk', 'name')
+        return context
 
 
 def index(request):

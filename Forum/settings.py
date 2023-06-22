@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django_summernote',
+    "django_bootstrap5",
     'main',
     'livechat',
 ]
@@ -103,17 +105,6 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-
-# SOCIALACCOUNT_EMAIL_REQUIRED = True
-# SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-# ACCOUNT_QUERY_EMAIL = False
-
 # EMAIL
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
@@ -121,6 +112,16 @@ EMAIL_HOST_USER = os.environ.get('LOGIN')
 EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = f'{os.environ.get("LOGIN")}@yandex.ru'
+
+# REDACTOR
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'
+SUMMERNOTE_CONFIG = {
+    'width': '100%'
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -168,6 +169,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
