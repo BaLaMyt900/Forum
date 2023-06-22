@@ -1,6 +1,6 @@
 import django.utils.timezone
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
-from ckeditor.fields import RichTextFormField
 from django.contrib.auth.models import User
 
 
@@ -16,7 +16,7 @@ class Announcement(models.Model):
     """ Модель объявления форума """
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, null=False)
-    text = RichTextFormField
+    text = RichTextUploadingField()
     date = models.DateTimeField(default=django.utils.timezone.now)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 

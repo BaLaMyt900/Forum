@@ -43,10 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'ckeditor',
+    'ckeditor_uploader',
     'main',
     'livechat',
 ]
@@ -103,17 +106,6 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-
-# SOCIALACCOUNT_EMAIL_REQUIRED = True
-# SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-# ACCOUNT_QUERY_EMAIL = False
-
 # EMAIL
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
@@ -121,6 +113,30 @@ EMAIL_HOST_USER = os.environ.get('LOGIN')
 EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = f'{os.environ.get("LOGIN")}@yandex.ru'
+
+# CKEDITOR
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+   'default': {
+       'toolbar_Full': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'], ['Source'],
+            ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+            ['NumberedList','BulletedList'],
+            ['Indent','Outdent'],
+            ['Maximize'],
+        ],
+       'width': 500,
+       'skin': 'bootstrapck'
+   },
+}
+
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -168,7 +184,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
