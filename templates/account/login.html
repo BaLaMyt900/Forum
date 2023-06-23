@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+{% block extra_head %}
+{% load i18n %}
+{% load account socialaccount %}
+{% endblock extra_head %}
+{% block title %}{% trans "Sign In" %}{% endblock title %}
+{% block body %}
+<div class="card">
+    <div class="card-header">{% trans "Sign In" %}</div>
+    <div class="card-body">
+        {% load i18n %}
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+        <p>Пожалуйста, войдите с помощью одной из ваших существующих сторонних учетных записей. Или, <a href="{{ signup_url }}">зарегестрировать</a>
+        учетную запись на нашем сайте и ввойдите в систему ниже:</p>
+        <div class="socialaccount_ballot">
+          <ul class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+          </ul>
+          <div class="login-or">{% trans 'or' %}</div>
+        </div>
+        {% include "socialaccount/snippets/login_extra.html" %}
+        {% else %}
+        <p>{% blocktrans %}If you have not created an account yet, then please
+        <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+        {% endif %}
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            <label class="form-label m-1" for="id_login">Логин:</label>
+            <input class="form-control m-1" style="width: 325px" type="text" name="login" placeholder="Имя пользователя или e-mail" autocomplete="email" required="" id="id_login">
+            <label class="form-label m-1" for="id_password">Пароль:</label>
+            <input class="form-control m-1" style="width: 325px" type="password" name="password" placeholder="Пароль" autocomplete="current-password" required="" id="id_password">
+            <div class="form-check m-1">
+                <label class="form-check-label" for="id_remember">Запомнить меня:</label>
+                <input class="form-check-input" type="checkbox" name="remember" id="id_remember">
+            </div>
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <a class="btn btn-outline-danger m-1" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+          <button class="btn btn-primary m-1" type="submit">{% trans "Sign In" %}</button>
+        </form>
+    </div>
+</div>
+{% block content %}
+{% endblock content %}
+{% endblock body %}
+{% block extra_body %}
+{% endblock extra_body %}

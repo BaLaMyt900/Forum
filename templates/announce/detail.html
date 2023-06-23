@@ -2,6 +2,7 @@
 {% block title %}Создание объявления{% endblock title %}
 {% block extra_head %}
     {% load static %}
+    {% load humanize %}
     <link rel="stylesheet" href="{% static 'summernote/summernote-bs5.min.css' %}">
     <script src="{% static 'summernote/summernote-bs5.min.js' %}"></script>
 {% endblock extra_head %}
@@ -10,6 +11,11 @@
     <div class="card-header">{{ object.title }}</div>
     <div class="card-body">
         {{ object.text|safe }}
+        <div class="body-footer">
+            Автор: {{ object.author }}<br>
+            {{ object.date }}<br>
+            {{ object.data|timesince }}
+        </div>
     </div>
 </div>
 {% endblock body %}

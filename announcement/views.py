@@ -1,15 +1,16 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView
 from announcement.forms import AnnounceForm
 from announcement.models import Announcement, Category
 
 
-class AnnouncementCreate(CreateView):  # TODO: Разобраться с пермиссион миксин
+class AnnouncementCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """ Страница создания объявления """
     model = Announcement
     form_class = AnnounceForm
     template_name = 'announce/new.html'
+    permission_required = 'announcement.add_announcement'
 
     def form_valid(self, form):
         """ Сохранение объявления с захватом автора из request """

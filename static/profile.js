@@ -70,28 +70,66 @@ $(function ($) {
     });
 });
 
+function once(fn, context) {
+    var result;
+    return function() {
+        if(fn) {
+            fn();
+            fn = null;
+        }
+        return result;
+    };
+}
+
+
+
 function Getprofile(pk) {
     $.ajax({
-        url: 'accounts/profile/' + pk,
+        url: '/accounts/profile/' + pk,
         dataType: 'json',
         type: 'GET',
         success: function (data) {
-            console.log('OK - ' + data);
             let profile = data.object;
             let announce = data.announce;
             let response = data.response;
             if (profile) {
                 var profile_form = $('<form>');
-                $.each(profile, function (i , item) {
-                    profile_form.append('<label class="form-label" for="profile_">${item}</label>');
-                    profile_form.append('<input id="profile_${item}" class="form-control" value="${item}" placeholder="${item}" type="text">');
+                profile_form.append(`<label class="col-form-label" for="profile_${profile.username}">Логин</label>`);
+                profile_form.append(`<input id="profile_${profile.username}" class="form-control" value="${profile.username}" readonly placeholder="Не указано" type="text">`);
+                profile_form.append(`<label class="col-form-label" for="profile_${profile.email}">Почта</label>`);
+                profile_form.append(`<input id="profile_${profile.email}" class="form-control" value="${profile.email}" readonly placeholder="Не указано" type="email">`);
+                profile_form.append(`<label class="col-form-label" for="profile_${profile.first_name}">Имя</label>`);
+                profile_form.append(`<input id="profile_${profile.first_name}" class="form-control" value="${profile.first_name}" readonly placeholder="Не указано" type="text">`);
+                profile_form.append(`<label class="col-form-label" for="profile_${profile.last_name}">Фамилиля</label>`);
+                profile_form.append(`<input id="profile_${profile.last_name}" class="form-control" value="${profile.last_name}" readonly placeholder="Не указано" type="text">`);
+                $('#profile_content').empty().append(profile_form).removeClass('d-none');
+                $('#profile_btn').addClass('active');
+            }
+            if (announce) {
+                var announce_list = $('<ul class="list-group list-group-flush bg-body-tertiary overflow-y-auto" style="height: 304px">');
+                $.each(announce, function (i, item) {
+                    announce_list.append(`<li class="list-group-item bg-body-tertiary"><a href="/announce/${item.id}">${item.title}</a></li>`);
                 });
-                $('#profile_content').append(profile_form);
+                $('#announce_content').empty().append(announce_list);
+            }
+            if (response) {
+                var response_list = $('<ul class="list-group list-group-flush bg-body-tertiary overflow-y-auto" style="height: 304px">');
+                $.each(response, function (i, item) {
+                   response_list.append(`<li class="list-group-item bg-body-tertiary"><a href="/announce/${item.id}">${item.title}</a></li>`);
+                });
+                $('#response_content').empty().append(response_list);
             }
         },
         error: function (data) {
             console.log('ERROR - ' + data);
         }
     });
-    return null;
 }
+
+$('#announce_btn').click(function () {
+    console.log('FFFFFFFFFFFFF');
+    $('#profile_content').addClass('d-none');
+    $('#response_content').addClass('d-none');
+    $('#announce_content').removeClass('d-none');
+});
+
