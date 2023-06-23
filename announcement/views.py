@@ -5,7 +5,7 @@ from announcement.forms import AnnounceForm
 from announcement.models import Announcement, Category
 
 
-class AnnouncementCreate(CreateView):
+class AnnouncementCreate(CreateView):  # TODO: Разобраться с пермиссион миксин
     """ Страница создания объявления """
     model = Announcement
     form_class = AnnounceForm
