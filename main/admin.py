@@ -1,6 +1,6 @@
 from django.contrib import admin
 from livechat.models import ChatMessage
-from main.models import Category, Announcement, Response
+from announcement.models import Category, Announcement, Response
 
 
 admin.site.register(ChatMessage)

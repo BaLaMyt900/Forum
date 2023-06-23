@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import forms
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
-from .models import Announcement, Category
+from django_summernote.widgets import SummernoteWidget
+from announcement.models import Announcement
 
 
 class AnnounceForm(forms.ModelForm):

@@ -1,8 +1,25 @@
 {% extends 'main.html' %}
-
+{% block extra_head %}
+{% load humanize %}
+{% endblock %}
 {% block body %}
 <div class="card">
-    <div class="card-header">fdgdfgdfgs</div>
-    <div class="card-body">dgtdsfgfgddddddddggggggggggggggggggggggggggggggggggggggddd</div>
+    <div class="card-header">Стартовая страница</div>
+    <div class="card-body">
+        {% for cat, objects in object_list.items %}
+            <div class="card mb-2">
+                <div class="card-header">{{ cat }}</div>
+                <div class="group-list card-body py-2">
+                    {% for obj in objects %}
+                        <div class="group-list-item">
+                            <a href="/announce/{{ obj.pk }}"><h5>{{ obj.title }}</h5></a>
+                            Автор: {{ obj.author }}<br>
+                            Написан {{ obj.date|timesince }} назад
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock body %}

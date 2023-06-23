@@ -8,7 +8,7 @@ function updateChat() {
         // Enumerate JSON objects
         $.each(data, function (i, item){
                 // console.log(item);
-                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break w-30" style="width: 240px">');
+                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break w-30" style="width: 270px">');
                 newChatLine.append('<div class="fw-semibold">' + item.author__username + '</div>');
                 newChatLine.append('<div class="fw-lighter">' + item.text + '</div>');
                 $('#chatbox').append(newChatLine);
@@ -24,7 +24,7 @@ function get_chat() {
             $('#chat_spinner').addClass('d-none');
             $.each(data, function (i, item){
                 // console.log(item);
-                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break w-30" style="width: 240px">');
+                var newChatLine = $('<div class="border rounded bg-body p-1 m-1 text-wrap text-break w-30" style="width: 270px">');
                 newChatLine.append('<div class="fw-semibold">' + item.author__username + '</div>');
                 newChatLine.append('<div class="fw-lighter">' + item.text + '</div>');
                 $('#chatbox').append(newChatLine);

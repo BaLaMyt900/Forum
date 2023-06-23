@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from json_views.views import JSONDetailView
-from main.models import Announcement, Response
+from announcement.models import Announcement, Response
+from allauth.account.forms import SignupForm
 
 
 class ProfileJSONView(JSONDetailView):
@@ -15,3 +16,11 @@ class ProfileJSONView(JSONDetailView):
         context['announce'] = Announcement.objects.filter(author=author)
         context['response'] = Response.objects.filter(author=author)
         return context
+
+
+class CustomSignupForm(SignupForm):
+    def save(self, request):
+        user = super().save(request)
+        user.groups.add(Group.objects.get(name='Users'))
+        return user
+

@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+{% block title %}Создание объявления{% endblock title %}
+{% block extra_head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'summernote/summernote-bs5.min.css' %}">
+    <script src="{% static 'summernote/summernote-bs5.min.js' %}"></script>
+{% endblock extra_head %}
+{% block body %}
+<div class="card">
+    <div class="card-header">{{ object.title }}</div>
+    <div class="card-body">
+        {{ object.text|safe }}
+    </div>
+</div>
+{% endblock body %}
+{% block scripts %}
+{% endblock scripts %}

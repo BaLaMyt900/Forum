@@ -12,17 +12,21 @@
         <form method="post">{% csrf_token %}
             <label class="form-label" for="id_title">Заголовок</label>
             <input class="form-control" id="id_title" name="title" type="text" maxlength="255" required>
-            <div class="row row-cols-4">
-                {% for category in categories %}
-                    <div class="col">
-                        <div class="form-check">
-                            <input class="form-check-input" name="category" value="{{ category.pk }}" id="id_{{ category.name }}" type="radio">
-                            <label class="form-check-label" for="id_{{ category.name }}">{{ category.name }}</label>
+            Категория
+            <div class="border rounded p-2 my-2">
+                <div class="row row-cols-4">
+                    {% for category in categories %}
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" name="category" value="{{ category.pk }}" id="id_{{ category.name }}" type="radio">
+                                <label class="form-check-label" for="id_{{ category.name }}">{{ category.name }}</label>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
             <div class="border rounded p-1 bg-body summernote-div">
+                {{ form.media }}
                 {{ form.text }}
             </div>
             <button class="btn btn-outline-success" type="submit">Опубликовать</button>

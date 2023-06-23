@@ -1,6 +1,6 @@
-import django.utils.timezone
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils.timezone import now as time
 
 
 class Category(models.Model):
@@ -16,7 +16,7 @@ class Announcement(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, null=False)
     text = models.CharField(max_length=555, null=False)
-    date = models.DateTimeField(default=django.utils.timezone.now)
+    date = models.DateTimeField(default=time)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -31,7 +31,8 @@ class Response(models.Model):
     is_accept = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(max_length=300, null=False)
-    date = models.DateTimeField(default=django.utils.timezone.now)
+    date = models.DateTimeField(default=time)
 
     class Meta:
         ordering = ('-date', )
+

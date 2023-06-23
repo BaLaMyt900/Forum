@@ -1,7 +1,5 @@
-from django.shortcuts import render, redirect
-from django.views.generic import CreateView
-from .forms import AnnounceForm
-from .models import Announcement, Response, Category
+from django.views.generic import ListView
+from announcement.models import Announcement, Response, Category
 from itertools import chain
 from django.http import JsonResponse
 
@@ -17,30 +15,24 @@ def LastActivityAjax(request):
         return JsonResponse(status=200, data={'list': activity})
 
 
-class AnnouncementCreate(CreateView):
-    """ Страница создания объявления """
-    model = Announcement
-    form_class = AnnounceForm
-    template_name = 'announce/new.html'
+class IndexView(ListView):
+    """ Стартовая страница """
+    model = Category
+    template_name = 'index.html'
 
-    def form_valid(self, form):
-        announce = form.save(commit=False)
-        announce.author = self.request.user
-        announce.save()
-        form.save_m2m()
-        return redirect('/')
-
-    def form_invalid(self, form):
-        print('FORM_IVALID!!!!!')
-        print(form)
-        return redirect('/')
-
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """ Выгрузка последних 10ти объявлений отсортированых по категориям """
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all().values('pk', 'name')
+        objects = Announcement.objects.all()[:10]
+        cats = context['object_list']
+        context['object_list'] = {}
+        for cat in cats:
+            context['object_list'][f'{cat.name}'] = []
+            for obj in objects:
+                if obj.category.name == cat.name:
+                    context['object_list'][f'{cat.name}'].append(obj)
+            if not context['object_list'][f'{cat.name}']:
+                context['object_list'].pop(f'{cat.name}')
         return context
 
-
-def index(request):
-    return render(request, 'index.html')
 
