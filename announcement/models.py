@@ -23,7 +23,7 @@ class Announcement(models.Model):
         return self.title if len(self.title) < 25 else self.title[:22] + '...'
 
     class Meta:
-        ordering = ('-date', )
+        ordering = ('date', )
 
 
 class Response(models.Model):
