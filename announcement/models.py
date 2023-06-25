@@ -30,6 +30,7 @@ class Response(models.Model):
     """ Отклик на объявлление форума """
     is_accept = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    announce = models.ForeignKey(Announcement, on_delete=models.CASCADE)
     text = models.TextField(max_length=300, null=False)
     date = models.DateTimeField(default=time)
 

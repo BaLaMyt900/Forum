@@ -9,12 +9,35 @@
     <div class="card-header">{{ object.title }}</div>
     <div class="card-body">
         {{ object.text|safe }}
-        <div class="body-footer">
-            Автор: {{ object.author }}<br>
-            {{ object.date }}<br>
-            {{ object.data|timesince }}
-        </div>
     </div>
+    <div class="card-footer">
+        Автор: {{ object.author }}<br>
+        {{ object.date }}<br>
+        {{ object.data|timesince }}
+    </div>
+</div>
+<div class="card my-2">
+    <div class="card-header">Отзывы</div>
+    <div class="card-body">
+        <form id="response_form">
+            <label class="form-label" for="response_text">Текст</label>
+            <textarea class="form-control" name="text" id="response_text" cols="30" rows="5" maxlength="300"></textarea>
+            <button class="btn btn-outline-success my-2">Отправить отзыв</button>
+        </form>
+    </div>
+    <div class="card-footer">
+        {% if not response %}
+            <h3>Комментариев пока нет! Будьте первым!</h3>
+        {% else %}
+            {% for comm in response %}
+            <div class="card">
+                <div class="card-header">{{ comm.author }}</div>
+                <div class="card-body">{{ comm.text }}</div>
+                <div class="card-footer">{{ comm.date }}</div>
+            </div>
+            {%  endfor %}
+        {% endif %}
+   </div>
 </div>
 {% endblock body %}
 {% block scripts %}

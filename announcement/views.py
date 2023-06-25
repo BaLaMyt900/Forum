@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from announcement.forms import AnnounceForm
-from announcement.models import Announcement, Category
+from announcement.models import Announcement, Category, Response
 
 
 class AnnouncementCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -34,6 +34,13 @@ class AnnounceView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['response'] = Response.objects.filter(announce=self.object, is_accept=True)
+        return context
 
 
+class AnnounceUpdate(UpdateView):  # TODO: Доделать редактирование
+    model = Announcement
+    template_name = 'announce/new.html'
 
+
+#  TODO: Сделать форму отправки откликов
