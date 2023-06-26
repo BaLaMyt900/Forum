@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from announcement.forms import AnnounceForm
 from announcement.models import Announcement, Category, Response
+from django.http import JsonResponse
 
 
 class AnnouncementCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -43,4 +44,10 @@ class AnnounceUpdate(UpdateView):  # TODO: Доделать редактиров
     template_name = 'announce/new.html'
 
 
-#  TODO: Сделать форму отправки откликов
+def JSONCreateResponde(request):
+    if request.method == 'POST':
+        Response.objects.create(text=request.POST.get('text'),
+                                author=request.user,
+                                announce=Announcement.objects.get(pk=request.POST.get('announce')))
+    return JsonResponse(status=200, data={'object': 'OK'})
+    

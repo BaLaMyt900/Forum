@@ -1,19 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
 from main.views import IndexView
-from announcement.views import AnnouncementCreate, AnnounceView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('livechat.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
     path('accounts/', include('profile.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('', IndexView.as_view()),
-    path('announce/new/', AnnouncementCreate.as_view()),
-    path('announce/<int:pk>', AnnounceView.as_view())
+    path('announce/', include('announcement.urls'))
 ]
 
 if settings.DEBUG:

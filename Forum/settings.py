@@ -266,8 +266,8 @@ LOGGING = {
         'django': {
             'handlers': [
                 'console_debug',
-                # 'console_info',
-                'console_warn',
+                'console_info',
+                # 'console_warn',
                 'console_err&crit',
                 'general'
             ],

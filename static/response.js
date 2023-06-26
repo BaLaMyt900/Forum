@@ -12,7 +12,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-const csrftokenn = getCookie('csrftoken');
 
 
 
@@ -20,7 +19,17 @@ $(function ($) {
     $('#response_form').submit(function (form) {
         form.preventDefault();
         $.ajax({
-            url: ''
-        })
-    })
-})
+            url: '/announce/responce/new/',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            data: $(this).serialize(),
+            method: 'POST',
+            success: function (data) {
+                $('#response_form').addClass('d-none');
+                $('#responce_succsess').removeClass('d-none');
+            },
+            error: function (data) {
+                console.log('ERROR - ' + data);
+            }
+        });
+    });
+});
