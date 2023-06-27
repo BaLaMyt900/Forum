@@ -17,6 +17,9 @@ function getProfile (pk) {
             const profile_content = $('#profile_content');
             const announce_content = $('#announce_content');
             const response_content = $('#response_content');
+            const notifications = Updatespan(pk);
+            console.log(notifications);
+            // TODO: Доделать сбор уведомлений и прикручивание их к объявлениям
             if (profile) {
                 var profile_form = $('<form>');
                 profile_form.append(`<label class="col-form-label" for="profile_${profile.username}">Логин</label>`);
@@ -39,7 +42,7 @@ function getProfile (pk) {
             if (response) {
                 var response_list = $('<ul class="list-group list-group-flush bg-body-tertiary overflow-y-auto" style="height: 304px">');
                 $.each(response, function (i, item) {
-                   response_list.append(`<li class="list-group-item bg-body-tertiary"><a href="/announce/${item.id}">${item.title}</a></li>`);
+                   response_list.append(`<li class="list-group-item bg-body-tertiary"><a href="/announce/${item.id}">${item.title}<span id="notification_${item.id}" class="badge bg-primary rounded-pill"></span></a></li>`);
                 });
                 response_content.empty().append(response_list);
             }
@@ -50,8 +53,6 @@ function getProfile (pk) {
     });
     return null;
 }
-
-
 
 $(function ($) {
     $('#announce_btn').click(function () {
@@ -84,4 +85,20 @@ $(function ($) {
     $('#profile_btn').removeClass('active');
     $('#reply_btn').addClass('active');
 });
-})
+});
+
+function Updatespan (pk) {
+    $.ajax({
+        url: '/accounts/profile/ajax/update_notifications/' + pk,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data)
+            return data.count;
+        },
+        error: function (data) {
+            return null;
+        }
+    });
+    return null;
+}

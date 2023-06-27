@@ -1,8 +1,7 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from json_views.views import JSONDetailView
-from announcement.models import Announcement, Response
-from allauth.account.forms import SignupForm
-
+from announcement.models import Announcement, Response, Notification
+from django.http import JsonResponse
 
 class ProfileJSONView(JSONDetailView):
     """ JSON view профиля пользователя """
@@ -18,9 +17,16 @@ class ProfileJSONView(JSONDetailView):
         return context
 
 
-class CustomSignupForm(SignupForm):
-    def save(self, request):
-        user = super().save(request)
-        user.groups.add(Group.objects.get(name='Users'))
-        return user
-
+def ajaxgetnotifications(request, pk):  # TODO: Сделать выборку колличества уведомлений по pk пользователя
+    """ AJAX запрос уведомлений """
+    if request.method == 'GET':
+        announce_list = Announcement.objects.filter(author_id=pk)
+        notifications = {}
+        for announce in announce_list:
+            count = Notification.objects.filter(object_id=announce.pk).count()
+            if count:
+                notifications[f'{announce.pk}'] = count
+        return JsonResponse(status=200, data={'notifications': notifications})
+    # if request.method == 'GET':
+    #     announce_notifications = Notification.objects.filter(object__announce_id=pk).count()
+    #     return JsonResponse(status=200, data={'count': announce_notifications})

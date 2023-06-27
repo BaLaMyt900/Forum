@@ -12,7 +12,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-const csrftokenn = getCookie('csrftoken');
+
 
 
 $(function ($){
@@ -26,7 +26,7 @@ $(function ($){
             url: "/accounts/login/",
             type: 'POST',
             data: $data,
-            headers: {'X-CSRFToken': csrftokenn},
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
             dataType: 'json',
             success: function (data) {
                 console.log(data);
@@ -60,7 +60,7 @@ $(function ($) {
         $.ajax({
             url: '/accounts/logout/',
             type: 'POST',
-            headers: {'X-CSRFToken': csrftokenn},
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
             success: function (data) {
                 window.location.reload();
             },

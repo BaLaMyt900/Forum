@@ -37,3 +37,7 @@ class Response(models.Model):
     class Meta:
         ordering = ('-date', )
 
+
+class Notification(models.Model):
+    """ Уведомление о создании отзыва"""
+    object = models.ForeignKey(Response, on_delete=models.CASCADE)

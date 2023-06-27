@@ -44,14 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'django_summernote',
     'announcement',
     'main',
     'livechat',
+    'profile',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -100,11 +101,15 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+ACCOUNT_FORMS = {'signup': 'profile.forms.CustomSignupForm'}
+
+SOCIALACCOUNT_FORMS = {'signup': 'profile.forms.CustomSocialSignupForm'}  # TODO: Разобраться с добавлением гугл пользователя в группу Users
+
+
 
 # EMAIL
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -266,7 +271,7 @@ LOGGING = {
         'django': {
             'handlers': [
                 'console_debug',
-                'console_info',
+                # 'console_info',
                 # 'console_warn',
                 'console_err&crit',
                 'general'

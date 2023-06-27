@@ -42,12 +42,3 @@ class AnnounceView(DetailView):
 class AnnounceUpdate(UpdateView):  # TODO: Доделать редактирование
     model = Announcement
     template_name = 'announce/new.html'
-
-
-def JSONCreateResponde(request):
-    if request.method == 'POST':
-        Response.objects.create(text=request.POST.get('text'),
-                                author=request.user,
-                                announce=Announcement.objects.get(pk=request.POST.get('announce')))
-    return JsonResponse(status=200, data={'object': 'OK'})
-    
