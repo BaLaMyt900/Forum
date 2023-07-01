@@ -13,20 +13,23 @@ def JSONProfileGet(request, pk):
                            'first_name': user.first_name, 'last_name': user.last_name}}
         if Announcement.objects.filter(author=user).exists():
             data['announce'] = list(Announcement.objects.filter(author=user).values('pk', 'title'))
+        if Response.objects.filter(author=user).exists():
+            data['response'] = list(Response.objects.filter(author=user).values('is_accept', 'announce__title',
+                                                                                'announce_id'))
         return JsonResponse(status=200, data=data)
-
 
 
 def ajaxgetnotifications(request, pk):  # TODO: Сделать выборку колличества уведомлений по pk пользователя
     """ AJAX запрос уведомлений """
-    if request.method == 'GET':
-        announce_list = Announcement.objects.filter(author_id=pk)
-        notifications = {}
+    author = User.objects.get(pk=pk)
+    if Notification.objects.filter(object__announce__author=author).exists():
+        announce_list = Announcement.objects.filter(author=author)
+        data = {}
         for announce in announce_list:
-            count = Notification.objects.filter(object_id=announce.pk).count()
-            if count:
-                notifications[f'{announce.pk}'] = count
-        return JsonResponse(status=200, data={'notifications': notifications})
-    # if request.method == 'GET':
-    #     announce_notifications = Notification.objects.filter(object__announce_id=pk).count()
-    #     return JsonResponse(status=200, data={'count': announce_notifications})
+            data[announce.pk] = Notification.objects.filter(object__response__announce=announce).count()
+        print(data)
+        return JsonResponse(status=200, data={'notifications': data})
+    else:
+        return JsonResponse(status=201, data={})
+
+

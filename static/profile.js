@@ -34,8 +34,9 @@ function getProfile (pk) {
             }
             if (announce) {
                 var announce_list = $('<ul class="list-group list-group-flush bg-body-tertiary overflow-y-auto" style="height: 304px">');
+                let notifications = GetNorifications(pk);
                 $.each(announce, function (i, item) {
-                    announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded"><a href="/announce/${item.pk}">${item.title}</a></li>`);
+                    announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded"><a href="/announce/${item.pk}">${item.title}<span class="badge bg-primary rounded-pill">${notifications}</span></a></a></li>`);
                 });
                announce_content.empty().append(announce_list);
             }
@@ -87,18 +88,16 @@ $(function ($) {
 });
 });
 
-function Updatespan (pk) {
+function GetNorifications (pk) {
     $.ajax({
         url: '/accounts/profile/ajax/update_notifications/' + pk,
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            console.log(data)
-            return data.count;
+            console.log(data);
         },
         error: function (data) {
-            return null;
+            console.log(data);
         }
     });
-    return null;
 }

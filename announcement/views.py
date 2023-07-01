@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from announcement.forms import AnnounceForm
-from announcement.models import Announcement, Category, Response
+from announcement.models import Announcement, Category, Response, Notification
 from django.http import JsonResponse
 
 
