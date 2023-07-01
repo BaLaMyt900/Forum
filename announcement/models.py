@@ -27,7 +27,7 @@ class Announcement(models.Model):
 
 
 class Response(models.Model):
-    """ Отклик на объявлление форума """
+    """ Отклик на объявление форума """
     is_accept = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     announce = models.ForeignKey(Announcement, on_delete=models.CASCADE)

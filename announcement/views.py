@@ -36,6 +36,10 @@ class AnnounceView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['response'] = Response.objects.filter(announce=self.object, is_accept=True)
+        if self.request.user == self.object.author and \
+                Response.objects.filter(is_accept=False, announce=self.object).exists():
+            """ Добавление на страницу неактивных откликов, если зашел автор объявления """
+            context['inactive_response'] = Response.objects.filter(is_accept=False, announce=self.object)
         return context
 
 

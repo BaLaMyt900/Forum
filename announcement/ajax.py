@@ -10,3 +10,19 @@ def ajaxcreateresponse(request):
                                 announce=Announcement.objects.get(pk=request.POST.get('announce')))
         Notification.objects.create(object=resp)
     return JsonResponse(status=200, data={'object': 'OK'})
+
+
+def accept_response(request, pk):
+    """ Функция публикация отзыва """
+    if request.method == 'POST':
+        object = Response.objects.get(pk=pk)
+        object.is_accept = True
+        object.save()
+        Notification.objects.get(object=object).delete()
+        return JsonResponse(status=200, data={})
+
+
+def remove_response(request, pk):
+    """ Функция удаления отзыва """
+    Response.objects.get(pk=pk).delete()
+    return JsonResponse(status=200, data={})

@@ -19,15 +19,15 @@ def JSONProfileGet(request, pk):
         return JsonResponse(status=200, data=data)
 
 
-def ajaxgetnotifications(request, pk):  # TODO: Сделать выборку колличества уведомлений по pk пользователя
+def ajaxgetnotifications(request, pk):
     """ AJAX запрос уведомлений """
     author = User.objects.get(pk=pk)
     if Notification.objects.filter(object__announce__author=author).exists():
         announce_list = Announcement.objects.filter(author=author)
         data = {}
         for announce in announce_list:
-            data[announce.pk] = Notification.objects.filter(object__response__announce=announce).count()
-        print(data)
+            data[announce.pk] = Notification.objects.filter(object__announce=announce).count()
+        data['sum'] = sum(data.values())
         return JsonResponse(status=200, data={'notifications': data})
     else:
         return JsonResponse(status=201, data={})

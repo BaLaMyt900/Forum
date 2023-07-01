@@ -33,3 +33,31 @@ $(function ($) {
         });
     });
 });
+
+$(function ($) {
+    $('#accept_response').click(function () {
+        $.ajax({
+            url: '/announce/ajax/accept_response/' + $(this).val(),
+            type: 'POST',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (data) {
+                console.log('OK!');
+                window.location.reload();
+            }
+        });
+    });
+});
+
+$(function ($) {
+    $('#remove_response').click(function () {
+        $.ajax({
+            url: '/announce/ajax/remove_response/' + $(this).val(),
+            type: 'POST',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            success: function (data) {
+                console.log('OK!');
+                window.location.reload();
+            }
+        });
+    });
+});

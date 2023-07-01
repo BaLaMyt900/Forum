@@ -16,6 +16,26 @@
         {{ object.data|timesince }}
     </div>
 </div>
+{% if inactive_response %}
+    <div class="card my-2">
+    <div class="card-header">Отзывы, ожидающие подтверждения</div>
+    <div class="card-body">
+        {% for comm in inactive_response %}
+            <div class="card my-2">
+                <div class="card-header">{{ comm.author }}</div>
+                <div class="card-body">{{ comm.text }}</div>
+                <div class="card-footer d-flex">
+                    <div class="flex-grow-1">{{ comm.date }}</div>
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-outline-success" id="accept_response" value="{{ comm.pk }}">Разрешить</button>
+                      <button type="button" class="btn btn-outline-danger" id="remove_response" value="{{ comm.pk }}">Запретить</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 <div class="card my-2">
     <div class="card-header">Отзывы</div>
     <div class="card-body">
@@ -39,13 +59,6 @@
                 <div class="card-body">{{ comm.text }}</div>
                 <div class="card-footer">
                     {{ comm.date }}
-                    {% if request.user.pk == object.author.pk %}
-                        <div role="group" class="btn-group">
-{#                        TODO: Доделать публикацию при + и удаление при -#}
-                            <button class="btn btn-outline-success">Разрешить</button>
-                            <button class="btn btn-outline-danger">Запретить</button>
-                        </div>
-                    {% endif %}
                 </div>
             </div>
             {%  endfor %}
