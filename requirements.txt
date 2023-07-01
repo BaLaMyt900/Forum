@@ -3,5 +3,4 @@ django-allauth
 celery[redis]
 redis
 python-dotenv
-django-generic-json-views
 django-summernote

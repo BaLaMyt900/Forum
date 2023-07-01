@@ -1,20 +1,20 @@
 from django.contrib.auth.models import User
-from json_views.views import JSONDetailView
+from django.core import serializers
+
 from announcement.models import Announcement, Response, Notification
 from django.http import JsonResponse
 
-class ProfileJSONView(JSONDetailView):
-    """ JSON view профиля пользователя """
-    model = User
-    queryset = User.objects.all().values('pk', 'username', 'date_joined', 'email', 'first_name', 'last_name')
 
-    def get_context_data(self, **kwargs):
-        """ Сбор информации о пользователе, информация, объявления, отклики """
-        context = super(ProfileJSONView, self).get_context_data(**kwargs)
-        author = self.object['pk']
-        context['announce'] = Announcement.objects.filter(author=author)
-        context['response'] = Response.objects.filter(author=author)
-        return context
+def JSONProfileGet(request, pk):
+    """ JSON запрос информации пользователя профиля пользователя """
+    user = User.objects.get(pk=pk)
+    if user:
+        data = {'object': {'username': user.username, 'email': user.email,
+                           'first_name': user.first_name, 'last_name': user.last_name}}
+        if Announcement.objects.filter(author=user).exists():
+            data['announce'] = list(Announcement.objects.filter(author=user).values('pk', 'title'))
+        return JsonResponse(status=200, data=data)
+
 
 
 def ajaxgetnotifications(request, pk):  # TODO: Сделать выборку колличества уведомлений по pk пользователя
