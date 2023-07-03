@@ -10,7 +10,6 @@ def ajaxcreateresponse(request):
                                 author=request.user,
                                 announce=Announcement.objects.get(pk=request.POST.get('announce')))
         Notification.objects.create(object=resp)
-        new_response_notification.apply_async([resp.pk])
     return JsonResponse(status=200, data={'object': 'OK'})
 
 

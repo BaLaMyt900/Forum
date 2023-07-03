@@ -24,7 +24,6 @@ $(function ($) {
             data: $(this).serialize(),
             method: 'POST',
             success: function (data) {
-                // $('#response_form').addClass('d-none');
                 $('#responce_succsess').removeClass('d-none');
             },
             error: function (data) {

@@ -5,8 +5,6 @@ from django.template.loader import render_to_string
 from announcement.models import Response
 
 
-# TODO: таск рассылки при создании отзыва автору объявления
-
 @shared_task
 def new_response_notification(pk):
     """ Задача по отправке сообщения автору объявления о новом отзыве на его объявлении """

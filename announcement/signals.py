@@ -8,4 +8,4 @@ from .tasks import new_response_notification
 def response_notyfication(sender, instance, created, **kwargs):
     """ Сигнал обрабатываемый при создании отзыва. Отправляет email автору объявления """
     if created:
-        print(1231241)
+        new_response_notification.apply_async([instance.pk])

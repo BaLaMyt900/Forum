@@ -14,6 +14,7 @@ function getProfile (pk) {
             let profile = data.object;
             let announce = data.announce;
             let response = data.response;
+            let notifications = data.notifications;
             const profile_content = $('#profile_content');
             const announce_content = $('#announce_content');
             const response_content = $('#response_content');
@@ -31,24 +32,15 @@ function getProfile (pk) {
             }
             if (announce) {
                 var announce_list = $('<ul class="list-group list-group-flush bg-body-tertiary overflow-y-auto" style="height: 304px">');
-                GetNorifications(pk)
-                    .then((response) => {
-                        $('#announce_span').text(response.notifications.sum);
-                        $.each(announce, function (i, item) {
-                        if (response.notifications[item.pk] !== 0) {
-                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded my-2"><a href="/announce/${item.pk}">${item.title}<span class="badge bg-primary rounded-pill">${response.notifications[item.pk]}</span></a></a></li>`);
-                        }
-                        else {
-                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded my-2"><a href="/announce/${item.pk}">${item.title}</a></a></li>`);
-                        }
+                if (notifications) {$('#announce_span').text(notifications.sum);}
+                $.each(announce, function (i, item) {
+                    if (notifications[item.pk]) {
+                        announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded my-2"><a href="/announce/${item.pk}">${item.title}<span class="badge bg-primary rounded-pill">${notifications[item.pk]}</span></a></a></li>`);
+                    }
+                    else {
+                        announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded my-2"><a href="/announce/${item.pk}">${item.title}</a></a></li>`);
+                    }
                 });
-                    })
-                    .catch(error => {
-                        $('#announce_span').text('');
-                        $.each(announce, function (i, item) {
-                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded"><a href="/announce/${item.pk}">${item.title}</a></a></li>`);
-                        });
-                    });
                announce_content.empty().append(announce_list);
             }
             if (response) {
@@ -105,20 +97,3 @@ $(function ($) {
     $('#reply_btn').addClass('active');
 });
 });
-
-function GetNorifications(pk) {
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: '/accounts/profile/ajax/update_notifications/' + pk,
-      type: 'GET',
-      dataType: 'json',
-      success: function (data) {
-        resolve(data)
-      },
-
-      error: function (error) {
-        reject(error)
-      },
-    })
-  })
-}

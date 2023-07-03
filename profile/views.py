@@ -14,6 +14,15 @@ def JSONProfileGet(request, pk):
         if Response.objects.filter(author=user).exists():
             data['response'] = list(Response.objects.filter(author=user).values('is_accept', 'announce__title',
                                                                                 'announce_id'))
+        if Notification.objects.filter(object__announce__author=user).exists():
+            announce_list = Announcement.objects.filter(author=user)
+            notifications = {}
+            for announce in announce_list:
+                notifications[announce.pk] = Notification.objects.filter(object__announce=announce).count()
+            notifications['sum'] = sum(notifications.values())
+            data['notifications'] = notifications
+        else:
+            data['notifications'] = {}
         return JsonResponse(status=200, data=data)
 
 
@@ -28,6 +37,6 @@ def ajaxgetnotifications(request, pk):
         data['sum'] = sum(data.values())
         return JsonResponse(status=200, data={'data': data})
     else:
-        return JsonResponse(status=404, data={})
+        return JsonResponse(status=204, data={})
 
 
