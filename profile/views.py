@@ -27,8 +27,3 @@ def JSONProfileGet(request, pk):
         else:
             data['notifications'] = {}
         return JsonResponse(status=200, data=data)
-
-
-def testcelery(request):
-    newsletter.apply_async([])
-    return redirect('/')
