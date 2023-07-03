@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import JSONProfileGet, testcelery
+from .views import JSONProfileGet
 
 
 urlpatterns = [
