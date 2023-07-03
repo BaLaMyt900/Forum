@@ -24,7 +24,7 @@ $(function ($) {
             data: $(this).serialize(),
             method: 'POST',
             success: function (data) {
-                $('#response_form').addClass('d-none');
+                // $('#response_form').addClass('d-none');
                 $('#responce_succsess').removeClass('d-none');
             },
             error: function (data) {
@@ -41,7 +41,6 @@ $(function ($) {
             type: 'POST',
             headers: {'X-CSRFToken': getCookie('csrftoken')},
             success: function (data) {
-                console.log('OK!');
                 window.location.reload();
             }
         });
@@ -55,7 +54,6 @@ $(function ($) {
             type: 'POST',
             headers: {'X-CSRFToken': getCookie('csrftoken')},
             success: function (data) {
-                console.log('OK!');
                 window.location.reload();
             }
         });

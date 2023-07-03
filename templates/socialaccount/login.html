@@ -5,18 +5,20 @@
 
 {% block body %}
 <div class="card w-75">
-  {% if process == "connect" %}
+
   <div class="card-header">
-    {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
+    Авторизация с помощью стороннего аккаунта
   </div>
   <div class="card-body text-wrap text-break">
+  {% if process == "connect" %}
+      {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
       {% blocktrans with provider.name as provider %}You are about to connect a new third party account from {{ provider }}.{% endblocktrans %}
     {% else %}
       {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
       {% blocktrans with provider.name as provider %}You are about to sign in using a third party account from {{ provider }}.{% endblocktrans %}
     {% endif %}
 
-    <form class="p-2" method="post">
+    <form class="py-2" method="post">
       {% csrf_token %}
       <button class="btn btn-outline-primary" type="submit">{% trans "Continue" %}</button>
     </form>

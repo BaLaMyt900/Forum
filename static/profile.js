@@ -36,20 +36,32 @@ function getProfile (pk) {
                         $('#announce_span').text(response.notifications.sum);
                         $.each(announce, function (i, item) {
                         if (response.notifications[item.pk] !== 0) {
-                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded"><a href="/announce/${item.pk}">${item.title}<span class="badge bg-primary rounded-pill">${response.notifications[item.pk]}</span></a></a></li>`);
+                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded my-2"><a href="/announce/${item.pk}">${item.title}<span class="badge bg-primary rounded-pill">${response.notifications[item.pk]}</span></a></a></li>`);
                         }
                         else {
-                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded"><a href="/announce/${item.pk}">${item.title}</a></a></li>`);
+                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded my-2"><a href="/announce/${item.pk}">${item.title}</a></a></li>`);
                         }
                 });
+                    })
+                    .catch(error => {
+                        $('#announce_span').text('');
+                        $.each(announce, function (i, item) {
+                            announce_list.append(`<li class="list-group-item bg-body d-inline-flex rounded"><a href="/announce/${item.pk}">${item.title}</a></a></li>`);
+                        });
                     });
-
                announce_content.empty().append(announce_list);
             }
             if (response) {
                 var response_list = $('<ul class="list-group list-group-flush bg-body-tertiary overflow-y-auto" style="height: 304px">');
                 $.each(response, function (i, item) {
-                   response_list.append(`<li class="list-group-item bg-body-tertiary"><a href="/announce/${item.id}">${item.title}<span id="notification_${item.id}" class="badge bg-primary rounded-pill"></span></a></li>`);
+                   if (item.is_accept) {
+                       response_list.append(`<li class="list-group-item bg-body d-flex"><a href="/announce/${item.announce_id}"><div class="d-flex-grow-1">${item.announce__title}</div><span class="badge bg-primary rounded-pill"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+</svg></span></a></li>`);
+                   }
+                   else {
+                       response_list.append(`<li class="list-group-item bg-body"><a href="/announce/${item.announce_id}">${item.announce__title}</a></li>`);
+                   }
                 });
                 response_content.empty().append(response_list);
             }
@@ -103,6 +115,7 @@ function GetNorifications(pk) {
       success: function (data) {
         resolve(data)
       },
+
       error: function (error) {
         reject(error)
       },

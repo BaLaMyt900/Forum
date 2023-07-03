@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from .models import Announcement, Response, Notification
+from .tasks import new_response_notification
 
 
 def ajaxcreateresponse(request):
@@ -9,6 +10,7 @@ def ajaxcreateresponse(request):
                                 author=request.user,
                                 announce=Announcement.objects.get(pk=request.POST.get('announce')))
         Notification.objects.create(object=resp)
+        new_response_notification.apply_async([resp.pk])
     return JsonResponse(status=200, data={'object': 'OK'})
 
 

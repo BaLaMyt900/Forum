@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% block title %}Редактирование объявления{% endblock title %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">Редактирование объявления</div>
+    <div class="card-body">
+        <form method="post">{% csrf_token %}
+            <label class="form-label" for="id_title">Заголовок</label>
+            <input class="form-control" id="id_title" name="title" type="text" value="{{ object.title }}" maxlength="255" required>
+            Категория
+            <div class="border rounded p-2 my-2">
+                <div class="row row-cols-4">
+                    {% for category in categories %}
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" name="category" value="{{ category.pk }}" id="id_{{ category.name }}" {% if object.category.pk == category.pk %}checked{% endif %} type="radio">
+                                <label class="form-check-label" for="id_{{ category.name }}">{{ category.name }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="border rounded p-1 bg-body summernote-div">
+                {{ form.media }}
+                {{ form.text }}
+            </div>
+            <button class="btn btn-outline-success my-2" type="submit">Принять изменения</button>
+        </form>
+    </div>
+</div>
+{% endblock body %}
+{% block scripts %}
+{% endblock scripts %}

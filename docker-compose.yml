@@ -19,7 +19,7 @@ services:
             context: .
         hostname: celery worker
         entrypoint: celery
-        command: -A Forum worker --loglevel=info
+        command: -A Forum.celery worker --loglevel=INFO
         volumes:
             -   .:/code:/Forum
         links:
@@ -32,7 +32,7 @@ services:
             context: .
         hostname: celery beat
         entrypoint: celery
-        command: -A Forum worker --loglevel=info -B
+        command: -A Forum.celery worker --loglevel=info --beat
         volumes:
             - .:/code:/Forum
         links:

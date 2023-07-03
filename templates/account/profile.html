@@ -24,7 +24,6 @@
        {% else %}
           <div class="card">
           <div class="card-header bg-body-tertiary">Здравствуй {{ request.user.username }}!</div>
-{#              TODO: Доделать модуль профиля#}
           <div class="card-body bg-body-tertiary">
               <script>
                   var pk = {{ request.user.pk }};
@@ -36,7 +35,7 @@
             </div>
             <div class="d-none" id="profile_content"></div>
             <div class="d-none" id="announce_content"></div>
-            <div class="d-none" id="reply_content"></div>
+            <div class="d-none" id="response_content"></div>
           </div>
           <div class="card-footer d-grid gap-2 bg-body-tertiary">
             <button class="btn btn-outline-danger" id="logout_form">Выход</button>

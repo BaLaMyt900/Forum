@@ -10,10 +10,17 @@
     <div class="card-body">
         {{ object.text|safe }}
     </div>
-    <div class="card-footer">
-        Автор: {{ object.author }}<br>
-        {{ object.date }}<br>
-        {{ object.data|timesince }}
+    <div class="card-footer d-flex flex-row">
+        <div class="flex-grow-1">
+            Автор: {{ object.author }}<br>
+            {{ object.date }}<br>
+            {{ object.data|timesince }}
+        </div>
+        {% if request.user == object.author %}
+            <div>
+                <a class="btn btn-outline-primary" href="/announce/edit/{{ object.pk }}">Редактировать объявление</a>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% if inactive_response %}

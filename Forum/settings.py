@@ -45,10 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'django_summernote',
-    'announcement',
+    'announcement.app.AnnounceConfig',
     'main',
     'livechat',
-    'profile',
+    'profile.app.ProfileConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -91,6 +91,7 @@ CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # LOGIN
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
@@ -105,10 +106,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-ACCOUNT_FORMS = {'signup': 'profile.forms.CustomSignupForm'}
-
-SOCIALACCOUNT_FORMS = {'signup': 'profile.forms.CustomSocialSignupForm'}  # TODO: Разобраться с добавлением гугл пользователя в группу Users
-
 
 
 # EMAIL

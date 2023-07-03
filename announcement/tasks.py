@@ -8,21 +8,19 @@ from announcement.models import Response
 # TODO: таск рассылки при создании отзыва автору объявления
 
 @shared_task
-def new_responce_notification(pk):
+def new_response_notification(pk):
     """ Задача по отправке сообщения автору объявления о новом отзыве на его объявлении """
-    response = Response.objects.filter(pk=pk).values('text', 'announce__title', 'announce__author__email', 'author__username')
+    response = Response.objects.filter(pk=pk).values('text', 'announce__title', 'announce__author__email', 'author__username').first()
     context = {
         'user': response['author__username'],
         'text': response['text'],
         'title': response['announce__title']
     }
-    message = render_to_string('announce/email/new_responce.html', context=context)
-
     mes = EmailMessage(
         f'Новый отзыв на Вашу статью!',
-        message,
+        render_to_string('announce/email/new_response.html', context=context),
         from_email=settings.DEFAULT_FROM_EMAIL,
-        to=response['announce__author__email']
+        to=[response['announce__author__email']]
     )
-    mes.content_type = 'html'
+    mes.content_subtype = 'html'
     mes.send()

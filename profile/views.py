@@ -1,6 +1,4 @@
 from django.contrib.auth.models import User
-from django.core import serializers
-
 from announcement.models import Announcement, Response, Notification
 from django.http import JsonResponse
 
@@ -28,8 +26,8 @@ def ajaxgetnotifications(request, pk):
         for announce in announce_list:
             data[announce.pk] = Notification.objects.filter(object__announce=announce).count()
         data['sum'] = sum(data.values())
-        return JsonResponse(status=200, data={'notifications': data})
+        return JsonResponse(status=200, data={'data': data})
     else:
-        return JsonResponse(status=201, data={})
+        return JsonResponse(status=404, data={})
 
 
