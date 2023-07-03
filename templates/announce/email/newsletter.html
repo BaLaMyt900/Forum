@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новые объявления за прошлую неделю!</title>
+</head>
+<body>
+    <h1>Добрый день {{ user }}!</h1>
+    <h3>На нашем форуме появились новые объявления!</h3>
+    <ul>
+        {% for item in list %}
+            <li><a href="127.0.0.1/announce/{{ item.pk }}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <h5>Скорее заходите на наш сайт!</h5>
+</body>
+</html>

@@ -107,6 +107,10 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+# EMAIL_NEWSLETTER
+""" Email рассылка всем пользователям. По умолчанию стоит рассылка в Понедельник за прошлую неделю.
+Шаблон рассылки лежит по пути /templates/announce/email/newsletter.html"""
+NEWSLETTER_ENABLE = False  # Включает новостную расылку. Установить значение True
 
 # EMAIL
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -116,7 +120,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = f'{os.environ.get("LOGIN")}@yandex.ru'
 
-# REDACTOR
+# EDITOR
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 X_FRAME_OPTIONS = 'SAMEORIGIN'

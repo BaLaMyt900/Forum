@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
+
 from announcement.models import Announcement, Response, Notification
 from django.http import JsonResponse
+from Forum.tasks import newsletter
 
 
 def JSONProfileGet(request, pk):
-    """ JSON запрос информации пользователя профиля пользователя """
+    """ JSON запрос информации профиля пользователя """
     user = User.objects.get(pk=pk)
     if user:
         data = {'object': {'username': user.username, 'email': user.email,
@@ -26,17 +29,6 @@ def JSONProfileGet(request, pk):
         return JsonResponse(status=200, data=data)
 
 
-def ajaxgetnotifications(request, pk):
-    """ AJAX запрос уведомлений """
-    author = User.objects.get(pk=pk)
-    if Notification.objects.filter(object__announce__author=author).exists():
-        announce_list = Announcement.objects.filter(author=author)
-        data = {}
-        for announce in announce_list:
-            data[announce.pk] = Notification.objects.filter(object__announce=announce).count()
-        data['sum'] = sum(data.values())
-        return JsonResponse(status=200, data={'data': data})
-    else:
-        return JsonResponse(status=204, data={})
-
-
+def testcelery(request):
+    newsletter.apply_async([])
+    return redirect('/')
