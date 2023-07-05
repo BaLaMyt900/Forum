@@ -1,4 +1,5 @@
 ### Итоговый проект - Форумник
+![hippo](https://i.imgur.com/6AqWIPA.gif)
  В проекте использованы:
 - Django
 - django-allauth 
