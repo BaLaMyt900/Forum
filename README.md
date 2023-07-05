@@ -1,4 +1,5 @@
 ### Итоговый проект - Форумник
+![til](./media/Prewiew.gif)
  В проекте использованы:
 - Django
 - django-allauth 

@@ -6,7 +6,7 @@ urlpatterns = [
     path('new/', AnnouncementCreate.as_view()),
     path('edit/<int:pk>', AnnounceUpdate.as_view()),
     path('<int:pk>/', AnnounceView.as_view()),
-    path('responce/new/', ajaxcreateresponse),
+    path('ajax/new_response/', ajaxcreateresponse),
     path('ajax/accept_response/<int:pk>', accept_response),
     path('ajax/remove_response/<int:pk>', remove_response)
 ]

@@ -19,7 +19,7 @@ $(function ($) {
     $('#response_form').submit(function (form) {
         form.preventDefault();
         $.ajax({
-            url: '/announce/responce/new/',
+            url: '/announce/ajax/new_response/',
             headers: {'X-CSRFToken': getCookie('csrftoken')},
             data: $(this).serialize(),
             method: 'POST',

@@ -46,15 +46,19 @@
 <div class="card my-2">
     <div class="card-header">Отзывы</div>
     <div class="card-body">
-        <form id="response_form">
-            <input name="announce" value="{{ object.pk }}" type="hidden">
-            <label class="form-label" for="response_text">Текст</label>
-            <textarea class="form-control" name="text" id="response_text" cols="30" rows="5" maxlength="300"></textarea>
-            <button class="btn btn-outline-success my-2" type="submit">Отправить отзыв</button>
-        </form>
-        <div id="responce_succsess" class="p-1 d-none">
-            Ваш отзыв успешно отправлен! Как только автор объявления проверит его и утвердит, он будет добавлен на страницу!
-        </div>
+        {% if request.user.is_authenticated %}
+            <form id="response_form">
+                <input name="announce" value="{{ object.pk }}" type="hidden">
+                <label class="form-label" for="response_text">Текст</label>
+                <textarea class="form-control" name="text" id="response_text" cols="30" rows="5" maxlength="300"></textarea>
+                <button class="btn btn-outline-success my-2" type="submit">Отправить отзыв</button>
+            </form>
+            <div id="responce_succsess" class="p-1 d-none">
+                Ваш отзыв успешно отправлен! Как только автор объявления проверит его и утвердит, он будет добавлен на страницу!
+            </div>
+        {% else %}
+            Отзывы могут отправлять только авторизованные пользователи.
+        {% endif %}
     </div>
     <div class="card-footer">
         {% if not response %}
